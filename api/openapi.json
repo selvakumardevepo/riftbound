@@ -1,0 +1,1375 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Riftbound: Echoes of the Aether API",
+    "description": "Server-Authoritative Anti-Cheat & Live-Ops API for Riftbound: Echoes of the Aether",
+    "version": "1.0.0-PROD"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register",
+        "operationId": "register_api_v1_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/guest": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Guest Login",
+        "description": "Fast-track zero-friction onboarding for new players.",
+        "operationId": "guest_login_api_v1_auth_guest_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/player/profile": {
+      "get": {
+        "tags": [
+          "Player & Inventory"
+        ],
+        "summary": "Get Profile",
+        "operationId": "get_profile_api_v1_player_profile_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/player/inventory": {
+      "get": {
+        "tags": [
+          "Player & Inventory"
+        ],
+        "summary": "Get Inventory",
+        "operationId": "get_inventory_api_v1_player_inventory_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InventoryItemResponse"
+                  },
+                  "title": "Response Get Inventory Api V1 Player Inventory Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/forge/upgrade": {
+      "post": {
+        "tags": [
+          "Forge & Armory"
+        ],
+        "summary": "Upgrade Weapon",
+        "operationId": "upgrade_weapon_api_v1_forge_upgrade_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgeUpgradeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rift/start": {
+      "post": {
+        "tags": [
+          "Rift Simulation & Anti-Cheat"
+        ],
+        "summary": "Start Rift Run",
+        "operationId": "start_rift_run_api_v1_rift_start_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiftStartRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiftStartResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rift/floor/complete": {
+      "post": {
+        "tags": [
+          "Rift Simulation & Anti-Cheat"
+        ],
+        "summary": "Complete Floor",
+        "operationId": "complete_floor_api_v1_rift_floor_complete_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FloorCompleteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FloorCompleteResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rift/extract": {
+      "post": {
+        "tags": [
+          "Rift Simulation & Anti-Cheat"
+        ],
+        "summary": "Extract Rift Run",
+        "operationId": "extract_rift_run_api_v1_rift_extract_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiftExtractRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiftExtractResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/guild/my-guild": {
+      "get": {
+        "tags": [
+          "Guild Citadel"
+        ],
+        "summary": "Get My Guild",
+        "operationId": "get_my_guild_api_v1_guild_my_guild_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/guild/create": {
+      "post": {
+        "tags": [
+          "Guild Citadel"
+        ],
+        "summary": "Create Guild",
+        "operationId": "create_guild_api_v1_guild_create_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuildCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/guild/contribute": {
+      "post": {
+        "tags": [
+          "Guild Citadel"
+        ],
+        "summary": "Contribute Aether",
+        "operationId": "contribute_aether_api_v1_guild_contribute_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuildContributeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/leaderboards/chrono-trials": {
+      "get": {
+        "tags": [
+          "Competitive Leaderboards"
+        ],
+        "summary": "Get Chrono Trials Leaderboard",
+        "description": "Fetch Top 50 global competitive scores.",
+        "operationId": "get_chrono_trials_leaderboard_api_v1_leaderboards_chrono_trials_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/LeaderboardEntryResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Chrono Trials Leaderboard Api V1 Leaderboards Chrono Trials Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/liveops/world-state": {
+      "get": {
+        "tags": [
+          "Live-Ops & Planetary Frontier"
+        ],
+        "summary": "Get Planetary World State",
+        "operationId": "get_planetary_world_state_api_v1_liveops_world_state_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorldEventResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/liveops/daily-surge": {
+      "get": {
+        "tags": [
+          "Live-Ops & Planetary Frontier"
+        ],
+        "summary": "Get Daily Planetary Surge",
+        "operationId": "get_daily_planetary_surge_api_v1_liveops_daily_surge_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Daily Planetary Surge Api V1 Liveops Daily Surge Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CombatMetricsPayload": {
+        "properties": {
+          "enemies_slain": {
+            "type": "integer",
+            "title": "Enemies Slain"
+          },
+          "damage_dealt": {
+            "type": "integer",
+            "title": "Damage Dealt"
+          },
+          "damage_taken": {
+            "type": "integer",
+            "title": "Damage Taken"
+          },
+          "resonances_triggered": {
+            "type": "integer",
+            "title": "Resonances Triggered"
+          },
+          "clear_time_ms": {
+            "type": "integer",
+            "title": "Clear Time Ms"
+          },
+          "client_signature_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Client Signature Hash"
+          }
+        },
+        "type": "object",
+        "required": [
+          "enemies_slain",
+          "damage_dealt",
+          "damage_taken",
+          "resonances_triggered",
+          "clear_time_ms"
+        ],
+        "title": "CombatMetricsPayload"
+      },
+      "FloorCompleteRequest": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "floor_number": {
+            "type": "integer",
+            "title": "Floor Number"
+          },
+          "combat_metrics": {
+            "$ref": "#/components/schemas/CombatMetricsPayload"
+          },
+          "selected_augment_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Augment Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "floor_number",
+          "combat_metrics"
+        ],
+        "title": "FloorCompleteRequest"
+      },
+      "FloorCompleteResponse": {
+        "properties": {
+          "validated": {
+            "type": "boolean",
+            "title": "Validated"
+          },
+          "status_message": {
+            "type": "string",
+            "title": "Status Message"
+          },
+          "next_floor": {
+            "type": "integer",
+            "title": "Next Floor"
+          },
+          "score_delta": {
+            "type": "integer",
+            "title": "Score Delta"
+          },
+          "total_score": {
+            "type": "integer",
+            "title": "Total Score"
+          },
+          "pending_aether": {
+            "type": "integer",
+            "title": "Pending Aether"
+          },
+          "pending_void_fragments": {
+            "type": "integer",
+            "title": "Pending Void Fragments"
+          },
+          "risk_options": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Risk Options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "validated",
+          "status_message",
+          "next_floor",
+          "score_delta",
+          "total_score",
+          "pending_aether",
+          "pending_void_fragments",
+          "risk_options"
+        ],
+        "title": "FloorCompleteResponse"
+      },
+      "ForgeUpgradeRequest": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "upgrade_type": {
+            "type": "string",
+            "title": "Upgrade Type",
+            "default": "ENHANCE_TIER"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id"
+        ],
+        "title": "ForgeUpgradeRequest"
+      },
+      "GuildContributeRequest": {
+        "properties": {
+          "aether_amount": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Aether Amount"
+          }
+        },
+        "type": "object",
+        "required": [
+          "aether_amount"
+        ],
+        "title": "GuildContributeRequest"
+      },
+      "GuildCreateRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 3,
+            "title": "Name"
+          },
+          "tag": {
+            "type": "string",
+            "maxLength": 6,
+            "minLength": 2,
+            "title": "Tag"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "tag"
+        ],
+        "title": "GuildCreateRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InventoryItemResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "item_type": {
+            "type": "string",
+            "title": "Item Type"
+          },
+          "tier": {
+            "type": "integer",
+            "title": "Tier"
+          },
+          "quality": {
+            "type": "string",
+            "title": "Quality"
+          },
+          "attributes": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Attributes"
+          },
+          "quantity": {
+            "type": "integer",
+            "title": "Quantity"
+          },
+          "is_equipped": {
+            "type": "boolean",
+            "title": "Is Equipped"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "item_id",
+          "item_type",
+          "tier",
+          "quality",
+          "attributes",
+          "quantity",
+          "is_equipped"
+        ],
+        "title": "InventoryItemResponse"
+      },
+      "LeaderboardEntryResponse": {
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "title": "Rank"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score"
+          },
+          "hero_id": {
+            "type": "string",
+            "title": "Hero Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rank",
+          "user_id",
+          "username",
+          "score",
+          "hero_id",
+          "title"
+        ],
+        "title": "LeaderboardEntryResponse"
+      },
+      "ProfileResponse": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "account_level": {
+            "type": "integer",
+            "title": "Account Level"
+          },
+          "mastery_xp": {
+            "type": "integer",
+            "title": "Mastery Xp"
+          },
+          "aether_shards": {
+            "type": "integer",
+            "title": "Aether Shards"
+          },
+          "void_fragments": {
+            "type": "integer",
+            "title": "Void Fragments"
+          },
+          "astral_cores": {
+            "type": "integer",
+            "title": "Astral Cores"
+          },
+          "world_contribution_points": {
+            "type": "integer",
+            "title": "World Contribution Points"
+          },
+          "active_hero_id": {
+            "type": "string",
+            "title": "Active Hero Id"
+          },
+          "current_season_score": {
+            "type": "integer",
+            "title": "Current Season Score"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "avatar_frame_id": {
+            "type": "string",
+            "title": "Avatar Frame Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "username",
+          "account_level",
+          "mastery_xp",
+          "aether_shards",
+          "void_fragments",
+          "astral_cores",
+          "world_contribution_points",
+          "active_hero_id",
+          "current_season_score",
+          "title",
+          "avatar_frame_id"
+        ],
+        "title": "ProfileResponse"
+      },
+      "RiftExtractRequest": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id"
+        ],
+        "title": "RiftExtractRequest"
+      },
+      "RiftExtractResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "final_score": {
+            "type": "integer",
+            "title": "Final Score"
+          },
+          "floors_cleared": {
+            "type": "integer",
+            "title": "Floors Cleared"
+          },
+          "aether_awarded": {
+            "type": "integer",
+            "title": "Aether Awarded"
+          },
+          "void_fragments_awarded": {
+            "type": "integer",
+            "title": "Void Fragments Awarded"
+          },
+          "mastery_xp_gained": {
+            "type": "integer",
+            "title": "Mastery Xp Gained"
+          },
+          "new_account_level": {
+            "type": "integer",
+            "title": "New Account Level"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "status",
+          "final_score",
+          "floors_cleared",
+          "aether_awarded",
+          "void_fragments_awarded",
+          "mastery_xp_gained",
+          "new_account_level"
+        ],
+        "title": "RiftExtractResponse"
+      },
+      "RiftStartRequest": {
+        "properties": {
+          "hero_id": {
+            "type": "string",
+            "title": "Hero Id",
+            "default": "hero_kaelen"
+          },
+          "rift_tier": {
+            "type": "integer",
+            "title": "Rift Tier",
+            "default": 1
+          },
+          "selected_weapon_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Weapon Id"
+          }
+        },
+        "type": "object",
+        "title": "RiftStartRequest"
+      },
+      "RiftStartResponse": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed"
+          },
+          "hero_id": {
+            "type": "string",
+            "title": "Hero Id"
+          },
+          "rift_tier": {
+            "type": "integer",
+            "title": "Rift Tier"
+          },
+          "initial_floor": {
+            "type": "integer",
+            "title": "Initial Floor"
+          },
+          "biome": {
+            "type": "string",
+            "title": "Biome"
+          },
+          "starting_health": {
+            "type": "integer",
+            "title": "Starting Health"
+          },
+          "floor_hazards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Floor Hazards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "seed",
+          "hero_id",
+          "rift_tier",
+          "initial_floor",
+          "biome",
+          "starting_health",
+          "floor_hazards"
+        ],
+        "title": "RiftStartResponse"
+      },
+      "TokenResponse": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token",
+          "user_id",
+          "username"
+        ],
+        "title": "TokenResponse"
+      },
+      "UserLoginRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "UserLoginRequest"
+      },
+      "UserRegisterRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 3,
+            "title": "Username"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "UserRegisterRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WorldEventResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "sector_name": {
+            "type": "string",
+            "title": "Sector Name"
+          },
+          "current_progress": {
+            "type": "integer",
+            "title": "Current Progress"
+          },
+          "target_progress": {
+            "type": "integer",
+            "title": "Target Progress"
+          },
+          "completion_percentage": {
+            "type": "number",
+            "title": "Completion Percentage"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "active_modifiers": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Active Modifiers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "sector_name",
+          "current_progress",
+          "target_progress",
+          "completion_percentage",
+          "status",
+          "active_modifiers"
+        ],
+        "title": "WorldEventResponse"
+      }
+    }
+  }
+}
