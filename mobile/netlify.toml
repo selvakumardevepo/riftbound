@@ -1,7 +1,9 @@
 [build]
-  base = "mobile"
   publish = "dist"
   command = "npm run build"
+
+[build.environment]
+  NPM_FLAGS = "--include=dev"
 
 # SPA Fallback Routing
 [[redirects]]
